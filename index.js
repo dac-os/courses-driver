@@ -85,6 +85,44 @@ exports.discipline = function (id, next) {
   });
 };
 
+exports.offerings = function (discipline, page, next) {
+  'use strict';
+
+  return httpRequest(uri + '/disciplines/' + discipline + '/offerings?page=' + page, function (error, res, body) {
+    var offerings;
+    if (error) {
+      error = new VError(error, 'error requesting offerings');
+      return next(error);
+    }
+    try {
+      offerings = JSON.parse(body);
+      return next(null, offerings);
+    } catch (error) {
+      error = new VError(error, 'error parsing offerings to json');
+      return next(error);
+    }
+  });
+};
+
+exports.offering = function (discipline, id, next) {
+  'use strict';
+
+  return httpRequest(uri + '/disciplines/' + discipline + '/offerings/' + id, function (error, res, body) {
+    var offering;
+    if (error) {
+      error = new VError(error, 'error requesting offering "$s"', id);
+      return next(error);
+    }
+    try {
+      offering = JSON.parse(body);
+      return next(null, offering);
+    } catch (error) {
+      error = new VError(error, 'error parsing offering "$s" to json', id);
+      return next(error);
+    }
+  });
+};
+
 exports.catalogs = function (page, next) {
   'use strict';
 
