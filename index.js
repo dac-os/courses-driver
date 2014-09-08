@@ -138,3 +138,20 @@ exports.block = function (catalog, modality, id, next) {
     next(error, body);
   });
 };
+
+exports.requirements = function (catalog, modality, block, next) {
+  'use strict';
+
+  return downloadPages('/catalogs/' + catalog + '/modalities/' + modality + '/blocks/' + block + '/requirements', next);
+};
+
+exports.requirement = function (catalog, modality, block, id, next) {
+  'use strict';
+
+  return httpRequest({
+    'url'  : uri + '/catalogs/' + catalog + '/modalities/' + modality + '/blocks/' + block + '/requirements/' + id,
+    'json' : true
+  }, function (error, res, body) {
+    next(error, body);
+  });
+};
